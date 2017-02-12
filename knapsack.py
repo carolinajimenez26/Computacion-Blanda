@@ -1,4 +1,6 @@
 # Solucion al problema de la mochila utilizando algortimos geneticos
+# Problema de la mochila de geeksforgeeks
+# http://www.geeksforgeeks.org/dynamic-programming-set-10-0-1-knapsack-problem/
 import random
 
 def valido(p,t,k):
@@ -38,7 +40,7 @@ def desempeno(p,v): #elije el de mejor desempeno
         if (tmp > mejor):
             mejor = tmp
             pi = i
-    return (desempenos,p[pi])
+    return (desempenos,p[pi],pi)
 
 def seleccion(p,d,n): # por ruleta
     #print ("d : ", d)
@@ -113,16 +115,16 @@ def operadorMutacion(p):
 
 if __name__ == '__main__':
 
-    t = [15,10,20,10,5,12,8,16,25,12] # tamano de cada objeto
-    v = [50,40,60,30,45,40,50,35,70,35] # valor de cada objeto
-    k = 70 # capacidad de la mochila
+    t = [10, 20, 30]#[15,10,20,10,5,12,8,16,25,12] # tamano de cada objeto
+    v = [60, 100, 120]#[50,40,60,30,45,40,50,35,70,35] # valor de cada objeto
+    k = 50#70 # capacidad de la mochila
     tp = 4 # tamano de la poblacion
-    n = 50 # generaciones
+    n = 100 # generaciones
 
     while (n):
         poblacion = poblacionInicial(t,v,k,tp) #lista de las poblaciones
         #print (poblacion)
-        desempenos, mejor = desempeno(poblacion,v) # desempeno de cada poblacion
+        desempenos, mejor, pi = desempeno(poblacion,v) # desempeno de cada poblacion
         poblacion = seleccion(poblacion, desempenos, tp-1) # tp-1 por el elitismo
         poblacion[len(poblacion)-1] = mejor # elitismo
         #print (poblacion)
@@ -134,3 +136,7 @@ if __name__ == '__main__':
         n -= 1
 
     print ("poblacion final: ", poblacion)
+
+    desempenos, mejor, pi = desempeno(poblacion,v)
+    print ("Mejor solucion: ", mejor)
+    print ("Valor maximizado: ", desempenos[pi])
